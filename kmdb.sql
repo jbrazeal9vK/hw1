@@ -134,7 +134,8 @@ Create table characters (
 
 Create table studios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    
+    studio_name text,
+    actor_id INTEGER
 );
 
 -- Insert data into your database that reflects the sample data shown above
