@@ -100,6 +100,8 @@
 -- The Dark Knight Rises  Anne Hathaway         Selina Kyle
 
 -- Turns column mode on but headers off
+.mode csv
+.import movies.csv movies_raw
 .mode column
 .headers off
 
@@ -118,18 +120,13 @@ Create table  movies (
     year_released INTEGER,
     rating TEXT,
     studio_id INTEGER
-    actor_id INTEGER
 );
 
 Create table actors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT
-);
-
-Create table characters (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    character_name TEXT,
-    actor_id INTEGER
+    name TEXT,
+    movie_id INTEGER,
+    character_name text
 );
 
 Create table studios (
@@ -140,7 +137,17 @@ Create table studios (
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
--- TODO!
+insert into movies (
+    id,
+    title,
+    year_released,
+    rating,
+    studio_id
+)
+Select * from movies_raw;
+drop table movies_raw;
+
+
 
 -- Prints a header for the movies output
 .print "Movies"
