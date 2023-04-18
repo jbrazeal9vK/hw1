@@ -102,6 +102,8 @@
 -- Turns column mode on but headers off
 .mode csv
 .import movies.csv movies_raw
+.import actors.csv actors_raw
+.import studios.csv studios_raw
 .mode column
 .headers off
 
@@ -138,16 +140,27 @@ Create table studios (
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 insert into movies (
-    id,
     title,
     year_released,
     rating,
     studio_id
 )
-Select * from movies_raw;
+Select title, year_released, rating, studio_id from movies_raw;
 drop table movies_raw;
 
+insert into actors (
+    name,
+    movie_id,
+    character_name
+)
+Select name, movie_id, character_name from actors_raw;
+drop table actors_raw;
 
+insert into studios (
+    studio_name
+)
+Select studio from studios_raw;
+drop table studios_raw;
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -155,7 +168,15 @@ drop table movies_raw;
 .print ""
 
 -- The SQL statement for the movies output
--- TODO!
+Select 
+    movies.title,
+    movies.year_released, 
+    movies.rating,
+    studios.studio_name
+
+from movies
+
+    inner join studios on studios.id = movies.studio_id;
 
 -- Prints a header for the cast output
 .print ""
@@ -165,4 +186,11 @@ drop table movies_raw;
 
 
 -- The SQL statement for the cast output
--- TODO!
+Select 
+    movies.title,
+    actors.name,
+    actors.character_name
+
+from movies
+
+    inner join actors on movies.id = actors.movie_id
